@@ -11,6 +11,7 @@ namespace OuterSorts
         private string? _headers;
         private readonly int sortingColumnIndex;
 
+        //Нету lineCountInChain и segments, но есть
         private readonly List<int> _series = new();
         
         private readonly Type[] typesOfTableColumns =
@@ -20,6 +21,8 @@ namespace OuterSorts
         {
             sortingColumnIndex = chosenField;
         }
+        //Запись похожа на естественную, только флаг - инт, и
+        //GetMinOfElements(firstStr, secondStr)==0
         private void SplitToFiles()
         {
             using var fileA = new StreamReader("A.csv");
@@ -92,6 +95,7 @@ namespace OuterSorts
             int counterC = 0;
             int counterD = 0;
 
+            // Есть вот эти трое!
             int indexB = 0;
             int indexC = 1;
             int indexD = 2;
@@ -99,6 +103,7 @@ namespace OuterSorts
             {
                 string? currentRecord;
                 int flag;
+                // и вот эта проверка
                 if (counterB == _series[indexB] && counterC == _series[indexC] && counterD == _series[indexD])
                 {
                     //Случай, когда мы дошли до конца серий в обоих подфайлах
@@ -143,6 +148,7 @@ namespace OuterSorts
                         1 => (elementC, 1)
                     };
                 }
+                // тут теперь Везде CheckElement
                 else if (CheckElement(counterB, indexB) && CheckElement(counterC, indexC))
                 {
                     //Случай, когда цепочки закончились в файлах В и С
@@ -194,6 +200,7 @@ namespace OuterSorts
                 }
             }
         }
+        //Вот этот ещё изменился
         private bool CheckElement(int counter, int index)
             => index >= _series.Count || counter == _series[index];
 
@@ -256,6 +263,7 @@ namespace OuterSorts
 
             return minIndex;
         }
+        // Этот тоже что логично изменился
         public void Sort()
         {
             while (true)
